@@ -42,10 +42,7 @@ void insert_last(int item)
 	}
 }
 
-struct Array{
-	int index;
-	int val;
-}s[5];
+
 void sort(int n)
 {
 	int i=0,j,t,a[n];
@@ -71,12 +68,7 @@ void sort(int n)
 		}
 		if(swap==0)break;
 	}
-	for(i=0;i<n;i++)
-	{
-		s[i].index=i;
-		s[i].val=a[i];
-	}
-	//storing sorted list
+
 	ptr=head;
 	i=0;
 	while(ptr!=NULL)
@@ -84,6 +76,10 @@ void sort(int n)
 		ptr->data=a[i++];
 		ptr=ptr->next;
 	}
+}
+
+void b_search(int item){
+	int lb, ub;
 }
 
 int main()

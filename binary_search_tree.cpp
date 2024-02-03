@@ -72,22 +72,31 @@ void Delete_BST(struct node *root, int val){
 		Delete_BST(root->right,val);
 	}
 	else if(root->left && root->right){
-		temp=findnode(root);
+		temp=findnode(root->right); //Inorder successor(smallest element in right subtree of root)
 		root->data=temp->data;
-        root->left=temp->left;
+		struct node *ptr=root->right;
+		while((ptr->left)->data != temp->data){
+			ptr=ptr->left;
+		}
+		ptr->left=NULL;
         free(temp);
 	}
 	else{
 		temp=root;
-        printf("temp = %d\n",temp->data);
+		
 		if(root->left==NULL && root->right==NULL)
 		root=NULL;
 		else if(root->left!=NULL){
-            prev_root->left=root->left;
+            if(prev_root->data < root->data) prev_root->right = root->left;
+			else
+			prev_root->left = root->left;
         }
 		else if(root->right!=NULL){
-            prev_root->right=root->right;
+            if(prev_root->data < root->data) prev_root->right = root->right;
+			else
+			prev_root->left = root->right;
         }
+
 		free(temp);
 	}
 }

@@ -105,22 +105,22 @@ struct node* insert(struct node* node, int key)
     // If this node becomes unbalanced, then 
     // there are 4 cases 
   
-    // Left Left Case 
+    // Left Left Case (+2)
     if (balance > 1 && key < node->left->key) 
         return rightRotate(node); 
   
-    // Right Right Case 
+    // Right Right Case (-2)
     if (balance < -1 && key > node->right->key) 
         return leftRotate(node); 
   
-    // Left Right Case 
+    // Left Right Case (+2)
     if (balance > 1 && key > node->left->key) 
     { 
         node->left =  leftRotate(node->left); 
         return rightRotate(node); 
     } 
   
-    // Right Left Case 
+    // Right Left Case (-2)
     if (balance < -1 && key < node->right->key) 
     { 
         node->right = rightRotate(node->right); 
@@ -131,6 +131,115 @@ struct node* insert(struct node* node, int key)
     return node; 
 } 
 
+/* Given a non-empty binary search tree, return the
+   node with minimum key value found in that tree.
+   Note that the entire tree does not need to be
+   searched. */
+struct node * minValueNode(struct node* node)
+{
+    struct node* current = node;
+ 
+    /* loop down to find the leftmost leaf */
+    while (current->left != NULL)
+        current = current->left;
+ 
+    return current;
+}
+ 
+// Recursive function to delete a node with given key
+// from subtree with given root. It returns root of
+// the modified subtree.
+struct node* deleteNode(struct node* root, int key)
+{
+    // STEP 1: PERFORM STANDARD BST DELETE
+ 
+    if (root == NULL)
+        return root;
+ 
+    // If the key to be deleted is smaller than the
+    // root's key, then it lies in left subtree
+    if ( key < root->key )
+        root->left = deleteNode(root->left, key);
+ 
+    // If the key to be deleted is greater than the
+    // root's key, then it lies in right subtree
+    else if( key > root->key )
+        root->right = deleteNode(root->right, key);
+ 
+    // if key is same as root's key, then This is
+    // the node to be deleted
+    else
+    {
+        // node with only one child or no child
+        if( (root->left == NULL) || (root->right == NULL) )
+        {
+            struct node *temp = root->left ? root->left :
+                                             root->right;
+ 
+            // No child case
+            if (temp == NULL)
+            {
+                temp = root;
+                root = NULL;
+            }
+            else // One child case
+             *root = *temp; // Copy the contents of
+                            // the non-empty child
+            free(temp);
+        }
+        else
+        {
+            // node with two children: Get the inorder
+            // successor (smallest in the right subtree)
+            struct node* temp = minValueNode(root->right);
+ 
+            // Copy the inorder successor's data to this node
+            root->key = temp->key;
+ 
+            // Delete the inorder successor
+            root->right = deleteNode(root->right, temp->key);
+        }
+    }
+ 
+    // If the tree had only one node then return
+    if (root == NULL)
+      return root;
+ 
+    // STEP 2: UPDATE HEIGHT OF THE CURRENT NODE
+    root->height = 1 + max(height(root->left),
+                           height(root->right));
+ 
+    // STEP 3: GET THE BALANCE FACTOR OF THIS NODE (to
+    // check whether this node became unbalanced)
+    int balance = getBalance(root);
+ 
+    // If this node becomes unbalanced, then there are 4 cases
+ 
+    // Left Left Case
+    if (balance > 1 && getBalance(root->left) >= 0)
+        return rightRotate(root);
+ 
+    // Left Right Case
+    if (balance > 1 && getBalance(root->left) < 0)
+    {
+        root->left =  leftRotate(root->left);
+        return rightRotate(root);
+    }
+ 
+    // Right Right Case
+    if (balance < -1 && getBalance(root->right) <= 0)
+        return leftRotate(root);
+ 
+    // Right Left Case
+    if (balance < -1 && getBalance(root->right) > 0)
+    {
+        root->right = rightRotate(root->right);
+        return leftRotate(root);
+    }
+ 
+    return root;
+}
+
 void preorder(struct node *root){
     if(root!=NULL){
         printf("%d ",root->key);
@@ -140,12 +249,13 @@ void preorder(struct node *root){
 }
 
 int main(){
-    int ins, conti=1;
+    int ins, ele, conti=1;
     struct node *root=NULL;
     do{
         printf("\n\nPress 1 to enter an element\n");
-        printf("Press 2 for Preorder Traversal the AVL Tree\n");
-        printf("Press 3 to exit\n");
+        printf("Press 2 to delete an element\n");
+        printf("Press 3 for Preorder Traversal the AVL Tree\n");
+        printf("Press 4 to exit\n");
         int ch;
         printf("\nEnter choice : ");
         scanf("%d",&ch);
@@ -155,13 +265,19 @@ int main(){
             scanf("%d",&ins);
             root=insert(root, ins);
             break;
-
+            
             case 2:
+            printf("\nEnter element to be deleted : ");
+            scanf("%d",&ele);
+            root = deleteNode(root, ele);
+            break;
+
+            case 3:
             printf("\nPreoder Traversal is : ");
             preorder(root);
             break;
 
-            case 3:
+            case 4:
             conti=0;
             break;
 
