@@ -40,7 +40,7 @@ void Mergesort(int lb,int ub)
 {
 	if(lb<ub)
 	{
-		int mid=(int)(lb+ub)/2;
+		int mid=(lb+ub)/2;
 		Mergesort(lb,mid);
 		Mergesort(mid+1,ub);
 		Merge(lb,mid,ub);
