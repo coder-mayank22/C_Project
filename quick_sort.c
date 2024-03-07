@@ -11,7 +11,7 @@ void swap(int *a, int *b){
 }
 
 int partition(int low, int high) {
-  
+  /*
   // select the rightmost element as pivot
   int pivot = a[high];
   
@@ -36,9 +36,33 @@ int partition(int low, int high) {
   swap(&a[i + 1], &a[high]);
   
   // return the partition point
-  return (i + 1);
-}
+  return (i + 1);*/
 
+  int i,j,t,flag=1,pos=low;
+  while(flag == 1){
+    for(i=high;i>pos;i--){
+        flag = 0;
+        if(a[pos]>a[i]){
+            swap(&a[pos], &a[i]);
+            pos=i;
+            flag=1;
+            break;
+        }
+    }
+    if(flag == 1){
+        for(i=low;i<pos;i++){
+            flag = 0;
+            if(a[pos]<a[i]){
+                swap(&a[pos],&a[i]);
+                pos = i;
+                flag = 1;
+                break;
+            }
+        }
+    }
+  }
+  return pos;
+}
 void Quicksort(int lb, int ub){
     if(lb<ub){
         pivot=partition(lb,ub);
