@@ -17,22 +17,23 @@ void displayMatrix(int nodes, int adjMatrix[MAX][MAX]){
     }
 }
 
-void BFS(int startNode, int nodes, int adjMatrix[MAX][MAX]){
-    static int visited[MAX];
-    int queue[MAX], front = 0, rear = 0, i;
-
+void DFS(int startNode, int nodes, int adjMatrix[MAX][MAX]){
+    int visited[MAX] = {0};
+    int stack[MAX], top = -1, i;
+    
+    stack[++top] = startNode;
     visited[startNode] = 1;
-    queue[rear++] = startNode;
-    printf("BFS Traversal starting from from node %d: ",startNode+1);
 
-    while(front!=rear){
-        int current = queue[front++];
+    printf("DFS Traversal starting from from node %d: ",startNode+1);
+
+    while(top!=-1){
+        int current = stack[top--];
         printf("%d ",current+1);
 
         for(i=0;i<nodes;i++){
             if(adjMatrix[current][i]==1 && visited[i]==0){
                 visited[i] = 1;
-                queue[rear++] = i;
+                stack[++top] = i;
             }
         }
     }
@@ -56,10 +57,10 @@ int main(){
 
     displayMatrix(nodes, adjMatrix);
 
-    printf("Enter the starting node for BFS traversal: ");
+    printf("Enter the starting node for DFS traversal: ");
     scanf("%d", &u);
 
-    BFS(u-1, nodes, adjMatrix);
+    DFS(u-1, nodes, adjMatrix);
 
     return 0;
 }
