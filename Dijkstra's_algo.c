@@ -2,8 +2,6 @@
 #define INFINITY 9999
 #define MAX 10
 
-void Dijkstra(int Graph[MAX][MAX], int n, int start);
-
 void Dijkstra(int Graph[MAX][MAX], int n, int start) {
   int cost[MAX][MAX], distance[MAX], pred[MAX];
   int visited[MAX], count, mindistance, nextnode, i, j;
@@ -53,9 +51,23 @@ void Dijkstra(int Graph[MAX][MAX], int n, int start) {
 }
 int main() {
   int Graph[MAX][MAX], i, j, n, u;
-  n = 7;
 
-  Graph[0][0] = 0;
+  printf("Enter number of vertices in the graph : ");
+  scanf("%d", &n);
+
+  for(i=0;i<n;i++){
+    for(j=0;j<n;j++){
+        if(i==j){
+            printf("Enter weight of self-loop on vertex %d : ", i);
+            scanf("%d", &Graph[i][i]);
+            continue;
+        }
+        printf("Enter weight of edge between vertices %d and %d : ", i, j);
+        scanf("%d", &Graph[i][j]);
+    }
+  }
+
+/*  Graph[0][0] = 0;
   Graph[0][1] = 0;
   Graph[0][2] = 1;
   Graph[0][3] = 2;
@@ -110,8 +122,9 @@ int main() {
   Graph[6][4] = 0;
   Graph[6][5] = 1;
   Graph[6][6] = 0;
-
-  u = 0;
+*/
+  printf("Enter source vertex : ");
+  scanf("%d", &u);
   Dijkstra(Graph, n, u);
 
   return 0;
