@@ -44,12 +44,16 @@ void jobSelection(){
 	for(i=0;i<jobs;i++)
 	printf("%d ", d[i]);
 	
+	int max = d[0];
+	for(i=0;i<jobs;i++)
+	if(d[i]>max) max = d[i];
+	
 	int profit = 0; //Stores the maximum profit
 	
-	for(i=0;i<jobs;i++)
+	for(i=0;i<max;i++)
 	final_dead[i] = 0;
 	
-	for(i=jobs;i>=0;i--){
+	for(i=max;i>=0;i--){
 		if(final_dead[i]!=0)
 		continue;
 		else{
@@ -63,7 +67,7 @@ void jobSelection(){
 			}
 		}
 	}
-	printf("Maximum Profit = %d\n", profit);
+	printf("\nMaximum Profit = %d\n", profit);
 	
 }
 
