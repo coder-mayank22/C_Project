@@ -25,7 +25,7 @@ void sort (int act) //Sorting the activities wrt finish time
 
 void activity_sel (int act)
 {
-	int i,j, c=0;
+	int i,j;
 	acti[0] = 0;
 	j = 0;
 	for (i=1;i<act;i++)
@@ -34,15 +34,12 @@ void activity_sel (int act)
 		{
 			acti[i] = i;
 			j=i;
-			c++;
 		}
-		else
-			c++;
 	}
 	
 	printf ("Activity set: ");
-	for (i = 0; i<=c; i++)
-		printf ("%d", acti[i]);
+	for (i = 0; i<act; i++)
+		printf ("%d  ", acti[i]);
 	printf ("\n");
 }
 
@@ -65,16 +62,18 @@ int main ()
 			scanf ("%d", &end[i]);
 		}
 			
-		
+		for(i=0;i<act;i++)
+		acti[i] = -1; // Setting all values of the acti array to -1
+
 		sort (act);
 		
 		printf ("Start set: ");
 		for (i = 0; i<act; i++)
-			printf ("%d", start[i]);
+			printf ("%d  ", start[i]);
 		printf ("\n");
 		printf ("End   set: ");
 		for (i = 0; i<act; i++)
-			printf ("%d", end[i]);
+			printf ("%d  ", end[i]);
 		printf ("\n");
 		
 		activity_sel (act);
