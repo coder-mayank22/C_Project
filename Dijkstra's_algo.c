@@ -8,12 +8,13 @@ void Dijkstra(int Graph[MAX][MAX], int n, int start) {
 
   // Creating cost matrix
   for (i = 0; i < n; i++)
-    for (j = 0; j < n; j++)
+    for (j = 0; j < n; j++){
       if (Graph[i][j] == 0)
         cost[i][j] = INFINITY;
       else
         cost[i][j] = Graph[i][j];
-
+    }
+  
   for (i = 0; i < n; i++) {
     distance[i] = cost[start][i];
     pred[i] = start;
