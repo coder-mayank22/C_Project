@@ -8,7 +8,7 @@ void input()
 	{
 		scanf("%d",&a[i]);
 	}
-}//end f input()
+}//end of input()
 
 int Merge(int lb,int mid,int ub)
 {
