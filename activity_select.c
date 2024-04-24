@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 #include <stdio.h>
 int start[100], end[100], acti[100];
 
@@ -82,7 +81,6 @@ int main ()
 		printf ("Do you want to continue? (1/0): ");
 		scanf ("%d", &wish);
 	}while (wish!=0);
-=======
 #include <stdio.h>
 int start[100], end[100], acti[100];
 
@@ -166,5 +164,4 @@ int main ()
 		printf ("Do you want to continue? (1/0): ");
 		scanf ("%d", &wish);
 	}while (wish!=0);
->>>>>>> a9b6520f1aa074c45bc777fd42beb569ca960413
 }
