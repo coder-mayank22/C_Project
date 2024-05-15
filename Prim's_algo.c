@@ -3,7 +3,7 @@
 #include<string.h>
 
 #define INF 9999999
-#define V 5
+#define V 6
 
 //The adjacency matrix
 /*int G[V][V] = {
@@ -16,7 +16,7 @@
 
 void addEdge(int u, int v, int adjMatrix[V][V]){
 	int w;
-	printf("Enter weight of edge between %d and %d : ", u, v);
+	printf("Enter weight of edge between %d and %d : ", u+1, v+1);
 	scanf("%d", &w);
 	adjMatrix[u][v] = w;
 	adjMatrix[v][u] = w;
@@ -75,7 +75,7 @@ int main(){
 				}
 			}
 		}
-		printf("%d - %d : %d\n", x, y, G[x][y]);
+		printf("%d - %d : %d\n", x+1, y+1, G[x][y]);
 		sum += G[x][y];
 		selected[y] = true;
 		no_edge++;
