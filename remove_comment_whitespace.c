@@ -14,16 +14,13 @@ void removeComments(char* prgm) {
             putchar(prgm[i]); // Print newline character
             line_number++;
         } else if (m_cmt && prgm[i] == '*' && prgm[i + 1] == '/') {
-            m_cmt = false;
-            i++;
+            m_cmt = false, i++;
         } else if (s_cmt || m_cmt) {
             // Skip characters inside comments
         } else if (prgm[i] == '/' && prgm[i + 1] == '/') {
-            s_cmt = true;
-            i++;
+            s_cmt = true, i++;
         } else if (prgm[i] == '/' && prgm[i + 1] == '*') {
-            m_cmt = true;
-            i++;
+            m_cmt = true, i++;
         } else {
             putchar(prgm[i]);
         }
@@ -35,10 +32,9 @@ void removeComments(char* prgm) {
 void removeSpaces(char* s) {
     char* d = s; // Destination pointer
     while (*s) {
-        while (*s == ' ')
-            s++; // Skip spaces
-        if (*s)
-            *d++ = *s++; // Copy non-space characters
+        if (*s != ' ' || (*(s + 1) != ' ' && *(s + 1) != '\n'))
+            *d++ = *s; // Copy non-space characters
+        s++;
     }
     *d = '\0'; // Null-terminate the modified string
 }
@@ -60,10 +56,15 @@ int main() {
     prgm[i] = '\0';
     fclose(file);
 
-    printf("Given Program:\n%s\n\n", prgm);
-    printf("Modified Program (without comments and extra spaces):\n");
-    removeComments(prgm);
+    printf("Original program:\n");
+    printf("%s\n", prgm);
+
+    printf("\nModified Program (without comments and extra spaces):\n");
+    // Remove whitespaces
     removeSpaces(prgm);
+
+    // Remove comments
+    removeComments(prgm);
 
     return 0;
 }
