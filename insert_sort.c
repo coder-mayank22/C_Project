@@ -2,6 +2,7 @@
 #define MAX 100
 
 int a[MAX];
+// Sorting method
 void sort(int n){
     int i, t, c;
     for(i=1;i<n;i++){
@@ -15,6 +16,7 @@ void sort(int n){
     }
 }
 
+//Main method
 int main(){
     int i, n;
     printf("Enter number of elements : ");
